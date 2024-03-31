@@ -16,6 +16,7 @@ import {
   Map,
   MapPin,
   MapPinned,
+  Phone,
   Save,
   Search,
   UserRound,
@@ -30,12 +31,13 @@ import { clearMask } from '../../../utils/clear-maks'
 const userFormSchema = z.object({
   name: z.string().min(1, 'Nome é obrigatório'),
   email: z.string().email('E-mail inválido'),
-  cep: z.string().min(1, 'CEP inválido'),
+  whatsapp: z.string().min(1, 'Whatsapp é obrigatório'),
+  cep: z.string().min(1, 'CEP é obrigatório'),
   street: z.string().min(1, 'Rua é obrigatória'),
   number: z.string().min(1, 'Número é obrigatório'),
   neighborhood: z.string().min(1, 'Bairro é obrigatório'),
   city: z.string().min(1, 'Cidade é obrigatória'),
-  state: z.string().min(1, 'UF é obrigatório').max(2, 'UF inválido'),
+  state: z.string().min(2, 'UF inválido').max(2, 'UF inválido'),
   complement: z.string(),
 })
 
@@ -52,6 +54,7 @@ export type UserFormData = z.infer<typeof userFormSchema>
 const initialValues: UserFormData = {
   name: '',
   email: '',
+  whatsapp: '',
   cep: '',
   street: '',
   number: '',
@@ -130,6 +133,24 @@ export function UserForm() {
             leftSection={<Mail size={20} />}
             {...register('email')}
             error={errors.email?.message}
+          />
+
+          <Controller
+            control={control}
+            name="whatsapp"
+            render={({ field: { onBlur, onChange, value } }) => (
+              <InputBase
+                flex={1}
+                label="Whatsapp"
+                leftSection={<Phone size={20} />}
+                component={IMaskInput}
+                mask="(00) 00000-0000"
+                value={value}
+                onBlur={onBlur}
+                onChange={onChange}
+                error={errors.whatsapp?.message}
+              />
+            )}
           />
 
           <Flex gap="xs" align="flex-end">
