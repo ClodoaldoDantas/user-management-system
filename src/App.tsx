@@ -1,7 +1,18 @@
+import '@mantine/core/styles.css'
+
+import { MantineProvider } from '@mantine/core'
+
+import { Home } from './pages/Home'
+
 export function App() {
   return (
-    <>
-      <h1>Hello World</h1>
-    </>
+    <MantineProvider
+      theme={{
+        fontFamily: 'Montserrat, sans-serif',
+        primaryColor: 'pink',
+      }}
+    >
+      <Home />
+    </MantineProvider>
   )
 }
