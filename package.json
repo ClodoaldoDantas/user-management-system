@@ -10,11 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@hookform/resolvers": "^3.3.4",
     "@mantine/core": "^7.7.1",
     "@mantine/hooks": "^7.7.1",
+    "axios": "^1.6.8",
     "lucide-react": "^0.363.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "react-hook-form": "^7.51.2",
+    "zod": "^3.22.4"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
