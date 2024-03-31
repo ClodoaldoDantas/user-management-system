@@ -9,7 +9,6 @@ import {
   Stack,
   TextInput,
 } from '@mantine/core'
-import axios from 'axios'
 import {
   Locate,
   Mail,
@@ -26,6 +25,8 @@ import { Controller, useForm } from 'react-hook-form'
 import { IMaskInput } from 'react-imask'
 import { z } from 'zod'
 
+import { createUser } from '../../../services/create-user'
+import { searchCep } from '../../../services/search-cep'
 import { clearMask } from '../../../utils/clear-maks'
 
 const userFormSchema = z.object({
@@ -40,14 +41,6 @@ const userFormSchema = z.object({
   state: z.string().min(2, 'UF inválido').max(2, 'UF inválido'),
   complement: z.string(),
 })
-
-interface ServiceCepResponse {
-  cep: string
-  city: string
-  state: string
-  neighborhood: string
-  street: string
-}
 
 export type UserFormData = z.infer<typeof userFormSchema>
 
@@ -93,9 +86,7 @@ export function UserForm() {
     try {
       setSearchingCep(true)
 
-      const { data } = await axios.get<ServiceCepResponse>(
-        `https://brasilapi.com.br/api/cep/v1/${cep}`,
-      )
+      const data = await searchCep(cep)
 
       setValue('city', data.city)
       setValue('state', data.state)
@@ -109,12 +100,13 @@ export function UserForm() {
   }
 
   async function handleSave(data: UserFormData) {
-    await new Promise(resolve => setTimeout(resolve, 2000))
-
-    // TODO: salvar usuário na API
-    console.log(data)
-
-    reset(initialValues)
+    try {
+      await createUser(data)
+      alert('Dados salvos com sucesso')
+      reset(initialValues)
+    } catch (error) {
+      alert('Erro ao salvar dados')
+    }
   }
 
   return (
