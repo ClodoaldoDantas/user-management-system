@@ -1,3 +1,17 @@
 {
-  "users": []
+  "users": [
+    {
+      "name": "Clodoaldo Dantas",
+      "email": "clodoaldodantas8@gmail.com",
+      "whatsapp": "(85) 99699-7959",
+      "cep": "60711-005",
+      "street": "Rua Holanda",
+      "number": "574",
+      "neighborhood": "Maraponga",
+      "city": "Fortaleza",
+      "state": "CE",
+      "complement": "Condominio Maraponga Ville",
+      "id": 1
+    }
+  ]
 }

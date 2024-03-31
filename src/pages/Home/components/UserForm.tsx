@@ -23,6 +23,7 @@ import {
 import { useState } from 'react'
 import { Controller, useForm } from 'react-hook-form'
 import { IMaskInput } from 'react-imask'
+import { toast } from 'sonner'
 import { z } from 'zod'
 
 import { createUser } from '../../../services/create-user'
@@ -79,7 +80,7 @@ export function UserForm() {
     const cepValue = clearMask(cep)
 
     if (cepValue.length !== 8) {
-      alert('CEP inválido')
+      toast.error('CEP inválido')
       return
     }
 
@@ -93,7 +94,7 @@ export function UserForm() {
       setValue('neighborhood', data.neighborhood)
       setValue('street', data.street)
     } catch (error) {
-      alert('CEP não encontrado')
+      toast.error('CEP não encontrado')
     } finally {
       setSearchingCep(false)
     }
@@ -102,10 +103,11 @@ export function UserForm() {
   async function handleSave(data: UserFormData) {
     try {
       await createUser(data)
-      alert('Dados salvos com sucesso')
+
+      toast.success('Dados salvos com sucesso')
       reset(initialValues)
     } catch (error) {
-      alert('Erro ao salvar dados')
+      toast.error('Erro ao salvar dados')
     }
   }
 
