@@ -1,9 +1,10 @@
 import '@mantine/core/styles.css'
 
 import { MantineProvider } from '@mantine/core'
+import { RouterProvider } from 'react-router-dom'
 import { Toaster } from 'sonner'
 
-import { Home } from './pages/Home'
+import { router } from './router'
 
 export function App() {
   return (
@@ -13,7 +14,7 @@ export function App() {
         primaryColor: 'pink',
       }}
     >
-      <Home />
+      <RouterProvider router={router} />
       <Toaster position="top-right" richColors closeButton />
     </MantineProvider>
   )
