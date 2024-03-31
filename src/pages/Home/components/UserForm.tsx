@@ -5,6 +5,7 @@ import {
   Fieldset,
   Flex,
   Group,
+  InputBase,
   Stack,
   TextInput,
 } from '@mantine/core'
@@ -20,13 +21,16 @@ import {
   UserRound,
 } from 'lucide-react'
 import { useState } from 'react'
-import { useForm } from 'react-hook-form'
+import { Controller, useForm } from 'react-hook-form'
+import { IMaskInput } from 'react-imask'
 import { z } from 'zod'
+
+import { clearMask } from '../../../utils/clear-maks'
 
 const userFormSchema = z.object({
   name: z.string().min(1, 'Nome é obrigatório'),
   email: z.string().email('E-mail inválido'),
-  cep: z.string().min(8, 'CEP inválido').max(8, 'CEP inválido'),
+  cep: z.string().min(1, 'CEP inválido'),
   street: z.string().min(1, 'Rua é obrigatória'),
   number: z.string().min(1, 'Número é obrigatório'),
   neighborhood: z.string().min(1, 'Bairro é obrigatório'),
@@ -59,6 +63,7 @@ const initialValues: UserFormData = {
 
 export function UserForm() {
   const {
+    control,
     register,
     formState: { errors, isSubmitting },
     handleSubmit,
@@ -75,7 +80,10 @@ export function UserForm() {
   const cep = watch('cep')
 
   async function handleSearchCep() {
-    if (cep.length !== 8) {
+    const cepValue = clearMask(cep)
+
+    if (cepValue.length !== 8) {
+      alert('CEP inválido')
       return
     }
 
@@ -100,7 +108,7 @@ export function UserForm() {
   async function handleSave(data: UserFormData) {
     await new Promise(resolve => setTimeout(resolve, 2000))
 
-    // TODO: salvar usuário no NOTION
+    // TODO: salvar usuário na API
     console.log(data)
 
     reset(initialValues)
@@ -125,13 +133,22 @@ export function UserForm() {
           />
 
           <Flex gap="xs" align="flex-end">
-            <TextInput
-              label="CEP"
-              type="number"
-              leftSection={<MapPin size={20} />}
-              flex={1}
-              {...register('cep')}
-              error={errors.cep?.message}
+            <Controller
+              control={control}
+              name="cep"
+              render={({ field: { onBlur, onChange, value } }) => (
+                <InputBase
+                  flex={1}
+                  label="CEP"
+                  leftSection={<MapPin size={20} />}
+                  component={IMaskInput}
+                  mask="00000-000"
+                  value={value}
+                  onBlur={onBlur}
+                  onChange={onChange}
+                  error={errors.cep?.message}
+                />
+              )}
             />
 
             <ActionIcon
@@ -141,6 +158,8 @@ export function UserForm() {
               variant="default"
               aria-label="Buscar CEP"
               onClick={handleSearchCep}
+              mt={25}
+              style={{ alignSelf: 'flex-start' }}
             >
               <Search size={18} />
             </ActionIcon>
