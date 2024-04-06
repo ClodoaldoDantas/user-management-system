@@ -1,14 +1,37 @@
-import { ActionIcon, Flex, Pagination, Table } from '@mantine/core'
+import { ActionIcon, Flex, Loader, Pagination, Table } from '@mantine/core'
 import { useQuery } from '@tanstack/react-query'
-import { Search, Trash } from 'lucide-react'
+import { Mail, PhoneCall, Search } from 'lucide-react'
+import { useSearchParams } from 'react-router-dom'
 
 import { getUsers } from '../../services/get-users'
 
+const ITEMS_PER_PAGE = 10
+
 export function Users() {
-  const { data: users } = useQuery({
-    queryKey: ['users'],
-    queryFn: getUsers,
+  const [searchParams, setSearchParams] = useSearchParams()
+  const page = Number(searchParams.get('page')) || 1
+
+  const { data, isLoading } = useQuery({
+    queryKey: ['users', page],
+    queryFn: () => getUsers({ page }),
   })
+
+  function handlePaginate(page: number) {
+    setSearchParams(params => {
+      params.set('page', String(page))
+      return params
+    })
+  }
+
+  const totalPages = data?.total ? Math.ceil(data.total / ITEMS_PER_PAGE) : 0
+
+  if (isLoading) {
+    return (
+      <Flex justify="center" align="center" py="xl">
+        <Loader />
+      </Flex>
+    )
+  }
 
   return (
     <>
@@ -21,7 +44,7 @@ export function Users() {
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>
-          {users?.map(user => (
+          {data?.users.map(user => (
             <Table.Tr key={user.id}>
               <Table.Td>{user.name}</Table.Td>
               <Table.Td>{user.email}</Table.Td>
@@ -42,9 +65,20 @@ export function Users() {
                   w={32}
                   ml="xs"
                   variant="default"
-                  aria-label="Remover usuário"
+                  aria-label="Enviar e-mail"
                 >
-                  <Trash size={18} />
+                  <Mail size={18} />
+                </ActionIcon>
+
+                <ActionIcon
+                  type="button"
+                  h={32}
+                  w={32}
+                  ml="xs"
+                  variant="default"
+                  aria-label="Enviar mensagem no WhatsApp"
+                >
+                  <PhoneCall size={18} />
                 </ActionIcon>
               </Table.Td>
             </Table.Tr>
@@ -52,9 +86,16 @@ export function Users() {
         </Table.Tbody>
       </Table>
 
-      <Flex justify="flex-end">
-        <Pagination mt="xl" total={5} />
-      </Flex>
+      {totalPages > 1 && (
+        <Flex justify="flex-end">
+          <Pagination
+            mt="xl"
+            value={page}
+            total={totalPages}
+            onChange={handlePaginate}
+          />
+        </Flex>
+      )}
     </>
   )
 }
