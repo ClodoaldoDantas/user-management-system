@@ -1,30 +1,36 @@
-# React + TypeScript + Vite
+## 👥 User Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+[![Author](https://img.shields.io/badge/author-ClodoaldoDantas-e64980)](https://github.com/ClodoaldoDantas)
+[![MIT License](https://img.shields.io/badge/License-MIT-e64980.svg)](https://choosealicense.com/licenses/mit/)
 
-Currently, two official plugins are available:
+Sistema de gerenciamento de usuários.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+![image-1](https://github.com/ClodoaldoDantas/user-management-system/assets/32376905/24d7e2cb-ab3a-4138-8d69-3c00ecdb36bf)
+![image-2](https://github.com/ClodoaldoDantas/user-management-system/assets/32376905/ac358d5b-38b1-4487-81b3-f2313e52ea86)
 
-## Expanding the ESLint configuration
+### ✨ Funcionalidades
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+- **✅ Cadastro:** formulário de cadastro para novos usuários.
+- **🌎 Busca pelo CEP:** O usuário consegue preencher os campos de endereço de forma automática ao consultar o seu CEP.
+- **📝 Listagem:** listagem de todos usuários cadastrados no sistema com paginação.
 
-- Configure the top-level `parserOptions` property like this:
+## 🚀 Tecnologias
 
-```js
-export default {
-  // other rules...
-  parserOptions: {
-    ecmaVersion: 'latest',
-    sourceType: 'module',
-    project: ['./tsconfig.json', './tsconfig.node.json'],
-    tsconfigRootDir: __dirname,
-  },
-}
-```
+- React (Vite)
+- Typescript
+- Mantine
+- Axios
+- TanStack Query
+- Brasil API
 
-- Replace `plugin:@typescript-eslint/recommended` to `plugin:@typescript-eslint/recommended-type-checked` or `plugin:@typescript-eslint/strict-type-checked`
-- Optionally add `plugin:@typescript-eslint/stylistic-type-checked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and add `plugin:react/recommended` & `plugin:react/jsx-runtime` to the `extends` list
+ ### 💻 Como executar o projeto
+
+1. Certifique-se de ter o Node instalado na sua máquina.
+2. Clone o repositório.
+3. Navegue até o diretório raiz do projeto.
+4. Execute o comando `npm install` para instalar as dependências do projeto.
+5. Execute o comando `npm run dev` para iniciar o servidor de desenvolvimento.
+6. Acesse o projeto em seu navegador através do endereço `http://localhost:5173/`.
+
+### 📝 Licença
+Esse projeto está sob a licença MIT.
