@@ -9,6 +9,7 @@ import {
   Stack,
   TextInput,
 } from '@mantine/core'
+import { useMutation } from '@tanstack/react-query'
 import {
   Locate,
   Mail,
@@ -72,6 +73,10 @@ export function Home() {
     resolver: zodResolver(userFormSchema),
   })
 
+  const { mutateAsync: createUserFn } = useMutation({
+    mutationFn: createUser,
+  })
+
   const [searchingCep, setSearchingCep] = useState(false)
 
   const cep = watch('cep')
@@ -102,7 +107,10 @@ export function Home() {
 
   async function handleSave(data: UserFormData) {
     try {
-      await createUser(data)
+      await createUserFn({
+        ...data,
+        number: Number(data.number),
+      })
 
       toast.success('Dados salvos com sucesso')
       reset(initialValues)
