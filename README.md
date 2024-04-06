@@ -32,5 +32,7 @@ Sistema de gerenciamento de usuários.
 5. Execute o comando `npm run dev` para iniciar o servidor de desenvolvimento.
 6. Acesse o projeto em seu navegador através do endereço `http://localhost:5173/`.
 
+> 💡 Esse projeto corresponde a uma aplicação front-end. Você pode integrar esse sistema com a API de sua preferência. Caso você queira fazer um teste, pode utilizar esse [repositório](https://github.com/ClodoaldoDantas/user-management-system-api-mock) utilizado durante a construção das telas.
+
 ### 📝 Licença
 Esse projeto está sob a licença MIT.
