@@ -1,14 +1,14 @@
 import { ActionIcon, Flex, Pagination, Table } from '@mantine/core'
+import { useQuery } from '@tanstack/react-query'
 import { Search, Trash } from 'lucide-react'
 
+import { getUsers } from '../../services/get-users'
+
 export function Users() {
-  const users = [
-    { id: 1, name: 'João', email: 'joao@example.com' },
-    { id: 2, name: 'Maria', email: 'maria@example.com' },
-    { id: 3, name: 'Pedro', email: 'pedro@example.com' },
-    { id: 4, name: 'Ana', email: 'ana@example.com' },
-    { id: 5, name: 'Lucas', email: 'lucas@example.com' },
-  ]
+  const { data: users } = useQuery({
+    queryKey: ['users'],
+    queryFn: getUsers,
+  })
 
   return (
     <>
@@ -21,7 +21,7 @@ export function Users() {
           </Table.Tr>
         </Table.Thead>
         <Table.Tbody>
-          {users.map(user => (
+          {users?.map(user => (
             <Table.Tr key={user.id}>
               <Table.Td>{user.name}</Table.Td>
               <Table.Td>{user.email}</Table.Td>
